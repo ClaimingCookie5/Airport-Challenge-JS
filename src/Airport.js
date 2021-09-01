@@ -1,21 +1,24 @@
+'use strict';
+
 class Airport {
     
-    constructor(capacity) {
+    constructor(name,capacity) {
+        this.name = name;
         this.capacity = capacity;
         this.hangar = [];
     }
 
-    _findPlane = (whichPlane) => {
+    _findPlane(whichPlane) {
         this.hangar.filter(plane => { 
-            return plane === whichPlane; 
+            return plane.id === whichPlane; 
         });
     }
 
-    landPlane = (plane) => {
-        this.hangar.push(plane)
+    clearLanding(plane) {
+        this.hangar.push(plane);
     }
 
-    planeTakeOff = (whichPlane) => {
-        this.hangar.splice(this._findPlane(whichPlane));
+    clearTakeOff(whichPlane) {
+        this.hangar.splice(this._findPlane(whichPlane), 1);
     }
 }
