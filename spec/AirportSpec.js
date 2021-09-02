@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Airport', () => {
 
     let airport;
@@ -16,14 +18,14 @@ describe('Airport', () => {
         });
 
         it('is initialized with hangar array and capacity limit', () => {
-            expect(airport).toEqual(jasmine.objectContaining({capacity: 20, hangar: []}));
+            expect(airport).toEqual(jasmine.objectContaining({_capacity: 20, _hangar: []}));
         });
     });
 
     describe('clearLanding', () => {
         it('is expected to land a plane in the hangar', () => {
             airport.clearLanding(plane1);
-            expect(airport.hangar).toHaveSize(1);
+            expect(airport.hangar()).toHaveSize(1);
         });
     });
 
@@ -31,8 +33,8 @@ describe('Airport', () => {
         it('is expected to remove plane from hangar for take off', () => {
             airport.clearLanding(plane1);
             airport.clearLanding(plane2);
-            airport.clearTakeOff('2468');
-            expect(airport.hangar).not.toContain(plane1);
+            airport.clearTakeOff(plane1);
+            expect(airport.hangar()).not.toContain(plane1);
         });
     });
 

@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Plane', () => {
 
     let plane;
@@ -13,15 +15,15 @@ describe('Plane', () => {
             expect(plane).toBeInstanceOf(Plane);
         });
 
-        it('is expected to have a name and ID', () => {
-            expect(plane).toEqual(jasmine.objectContaining({ name: 'Boeing', id: 'N461HV', location: [] }));
+        it('is expected to have a name , ID and empty location', () => {
+            expect(plane).toEqual(jasmine.objectContaining({ __name: 'Boeing', __id: 'N461HV', __location: [] }));
         });
     });
 
     describe('land', () => {
         it('is expected to land plane at airport', () => {
             plane.land(airport);
-            expect(plane.location).toContain(airport);
+            expect(plane.location()).toContain('Heathrow');
         });
     });
 
@@ -29,7 +31,7 @@ describe('Plane', () => {
         it('is expected to take off from airport', () => {
             plane.land(airport);
             plane.takeOff();
-            expect(plane.location).not.toContain(airport);
+            expect(plane.location()).toEqual([]);
         })
     })
 

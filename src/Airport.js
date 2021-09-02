@@ -3,22 +3,29 @@
 class Airport {
     
     constructor(name,capacity) {
-        this.name = name;
-        this.capacity = capacity;
-        this.hangar = [];
+        this._name = name;
+        this._capacity = capacity;
+        this._hangar = [];
+    };
+
+    name() {
+        return this._name;
     }
 
-    _findPlane(whichPlane) {
-        this.hangar.filter(plane => { 
-            return plane.id === whichPlane; 
-        });
-    }
+    hangar() {
+        return this._hangar;
+    };
 
     clearLanding(plane) {
-        this.hangar.push(plane);
-    }
+        plane.land(this)
+        this._hangar.push(plane);
+    };
 
     clearTakeOff(whichPlane) {
-        this.hangar.splice(this._findPlane(whichPlane), 1);
-    }
+        whichPlane.takeOff();
+        this._hangar = this._hangar.filter(plane => {
+            plane !== whichPlane;
+        })
+    };
+
 }

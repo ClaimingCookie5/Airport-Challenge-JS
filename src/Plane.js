@@ -3,16 +3,20 @@
 class Plane {
 
     constructor(name, id) {
-        this.name = name;
-        this.id = id;
-        this.location = [];
+        this.__name = name;
+        this.__id = id;
+        this.__location = [];
+    }
+
+    location() {
+        return this.__location;
     }
 
     land(airport) {
-        this.location.push(airport);
+        this.__location = airport.name();
     }
 
     takeOff() {
-        this.location = [];
+        this.__location = [];
     }
 }
