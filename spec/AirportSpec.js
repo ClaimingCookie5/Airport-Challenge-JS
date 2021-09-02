@@ -22,14 +22,16 @@ describe('Airport', () => {
         });
     });
 
-    describe('clearLanding', () => {
+    describe('normal conditions', () => {
+        beforeEach(() => {
+            spyOn(Math, 'random').and.returnValue(0);
+        });
+
         it('is expected to land a plane in the hangar', () => {
             airport.clearLanding(plane1);
             expect(airport.hangar()).toHaveSize(1);
         });
-    });
 
-    describe('clearTakeOff', () => {
         it('is expected to remove plane from hangar for take off', () => {
             airport.clearLanding(plane1);
             airport.clearLanding(plane2);
@@ -37,6 +39,22 @@ describe('Airport', () => {
             expect(airport.hangar()).not.toContain(plane1);
         });
     });
+
+    describe('stormy conditions', () => {
+        it('is not expected to allow plane to land', () => {
+            spyOn(Math, 'random').and.returnValue(1);
+            expect(() => { airport.clearLanding(plane1); }).toThrow(new Error('Cannot land in a storm'));
+            expect(airport.hangar()).toEqual([]);
+        })
+
+        it('is not expected to allow take off if stromy', () => {
+            spyOn(Math, 'random').and.returnValue(0);
+            airport.clearLanding(plane1);
+            spyOn(airport._weather, 'isStormy').and.returnValue(true);
+            expect(() => { airport.clearLanding(plane1); }).toThrow(new Error('Cannot land in a storm'));
+            expect(airport.hangar()).toEqual([plane1]);
+        })
+    })
 
 
 });
